@@ -37,7 +37,6 @@ Cantidad_Total = st.sidebar.number_input("Cantidad Total(gr)", value=0)
 Tiempo = st.sidebar.number_input("Tiempo (hours)", value=0)
 Temperatura = st.sidebar.number_input("Temperatura (°C)", value=0)
 Disolvente = st.sidebar.number_input("Disolvente", value=0.0, format="%.2f")
-Cte3 = st.sidebar.number_input("Cte3", value=0.0, format="%.2f")
 LicorLavado = st.sidebar.number_input("LicorLavado", value=0.0, format="%.2f")
 Acid_Concentration = st.sidebar.number_input("Concentración de ácido", value=0.0, format="%.2f")
 Volume_of_Acid = st.sidebar.number_input("Volúmen de ácido (L)", value=0.0, format="%.2f")
@@ -65,7 +64,6 @@ input_data = pd.DataFrame([{
     "Tiempo": Tiempo,
     "Temperatura": Temperatura,
     "Disolvente": Disolvente,
-    "Cte3": Cte3,
     "LicorLavado": LicorLavado,
     "Concentración de ácido": Acid_Concentration,
     "Volúmen de ácido (L)": Volume_of_Acid,
