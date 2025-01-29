@@ -94,7 +94,7 @@ res_importances = model_residuo.feature_importances_
 
 # Nombres de las características
 feature_names = [
-    "MP(gr)", "Cantidad Total(gr)", "Tiempo", "Temperatura", "Disolvente", "Cte3",
+    "MP(gr)", "Cantidad Total(gr)", "Tiempo", "Temperatura", "Disolvente", 
     "LicorLavado", "Concentración de ácido", "Volúmen de ácido (L)", 
     "Metal_Fe", "Metal_Mg", "Metal_Mn", "Metal_Zn"
 ]
