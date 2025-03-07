@@ -16,21 +16,21 @@ st.title("🔬 Predicción de Lixiviación - Optimizado")
 st.sidebar.header("📌 Parámetros de Entrada")
 
 # 1️⃣ Total Mass of Material
-MP_gr = st.sidebar.number_input("Masa de Sólido (g)", value=100, format="%.2f")
+MP_gr = st.sidebar.number_input("Masa de Sólido (g)", value=100.0, format="%.2f")
 
 # 2️⃣ Acid Concentration (User Input)
 Acid_Concentration = st.sidebar.number_input("Concentración de Ácido (M)", value=1.0, format="%.2f")
 
 # 3️⃣ Process Conditions
-Temperature = st.sidebar.number_input("Temperatura (°C)", value=70)
-Time = st.sidebar.number_input("Tiempo (min)", value=90)
+Temperature = st.sidebar.number_input("Temperatura (°C)", value=70.0, format="%.2f")
+Time = st.sidebar.number_input("Tiempo (min)", value=90.0, format="%.2f")
 
 # 4️⃣ Select Metal
-metal = st.sidebar.selectbox("Metal", ["Mn", "Fe"], index=0)
+metal_options = ["Fe", "Mg", "Mn", "Zn"]  # All four metals
+metal = st.sidebar.selectbox("Metal", metal_options, index=0)
 
-# Cte1: Fixed Composition (Stored in Code)
-Cte1_Composition = {"Mn": 24.67, "Fe": 24.67}  # Fixed values
-selected_composition = Cte1_Composition[metal]
+# One-Hot Encoding: Ensure all four metals have a feature column
+metal_features = {m: 1 if metal == m else 0 for m in metal_options}
 
 # ✅ pH Calculation
 if Acid_Concentration > 1:
@@ -52,24 +52,27 @@ input_data = pd.DataFrame([{
     "Temperatura": Temperature,
     "Tiempo": Time,
     "Volumen de Ácido (L)": Volume_of_Acid,
-    "Metal_Mn": 1 if metal == "Mn" else 0,
-    "Metal_Fe": 1 if metal == "Fe" else 0
+    **metal_features  # Expands to "Metal_Fe", "Metal_Mg", "Metal_Mn", "Metal_Zn"
 }])
 
 # ✅ Model Prediction
 if st.button("🔮 Predecir"):
-    eff_prediction = model_efficiency.predict(input_data)[0]
-    res_prediction = model_residuo.predict(input_data)[0]
+    # Check if feature counts match before prediction
+    if input_data.shape[1] != len(model_efficiency.feature_importances_):
+        st.error(f"❌ Feature mismatch: Model expects {len(model_efficiency.feature_importances_)} features, but received {input_data.shape[1]}.")
+    else:
+        eff_prediction = model_efficiency.predict(input_data)[0]
+        res_prediction = model_residuo.predict(input_data)[0]
 
-    # ✅ Calculate Cte2 and Cte3 based on predictions
-    Cte2 = eff_prediction * MP_gr / 100  
-    Cte3 = res_prediction  # Solid Residue
+        # ✅ Calculate Cte2 and Cte3 based on predictions
+        Cte2 = eff_prediction * MP_gr / 100  
+        Cte3 = res_prediction  # Solid Residue
 
-    # Display Predictions
-    st.write(f"### ✅ Eficiencia de Lixiviación Predicha: {eff_prediction:.2f}%")
-    st.write(f"### 🏗️ Residuo Predicho (g): {res_prediction:.2f}g")
-    st.write(f"📌 **Cte2 (Neutralized Output):** {Cte2:.2f}g")
-    st.write(f"📌 **Cte3 (Solid Residue):** {Cte3:.2f}g")
+        # Display Predictions
+        st.write(f"### ✅ Eficiencia de Lixiviación Predicha: {eff_prediction:.2f}%")
+        st.write(f"### 🏗️ Residuo Predicho (g): {res_prediction:.2f}g")
+        st.write(f"📌 **Cte2 (Neutralized Output):** {Cte2:.2f}g")
+        st.write(f"📌 **Cte3 (Solid Residue):** {Cte3:.2f}g")
 
 # 🔎 Feature Importance
 st.markdown("### 🔍 Importancia de Variables en la Predicción")
@@ -90,4 +93,4 @@ if len(feature_names) == len(eff_importances):
 
     st.pyplot(fig1)
 else:
-    st.error("❌ Error: Mismatch in feature count. Check model training features.")
+    st.error(f"❌ Feature mismatch: Model expects {len(eff_importances)} features but received {len(feature_names)}.")
