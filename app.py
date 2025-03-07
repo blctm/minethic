@@ -58,7 +58,7 @@ input_data = pd.DataFrame([{
     "Metal_Zn": metal_features[3]
 }])
 
-Cte2 = eff_prediction * MP_gr / 100  # Example formula
+#Cte2 = eff_prediction * MP_gr / 100  # Example formula
 Cte3 = res_prediction  # Residue prediction
 
 
@@ -67,8 +67,14 @@ if st.button("Predecir"):
     eff_prediction = round(((MP_gr - (RSS_porcentajes * MP_gr / 100)) / MP_gr) * 100, 2)
     res_prediction = RSS_porcentajes * MP_gr / 100
 
+     # ✅ Now we can safely calculate Cte2 (because eff_prediction is defined)
+    Cte2 = eff_prediction * MP_gr / 100  
+    Cte3 = res_prediction  # Residue prediction
+    # Display predictions
+
     st.write(f"### ✅ Eficiencia Predicha (BS): {eff_prediction:.2f}%")
     st.write(f"### 🏗️ Residuo Predicho (gr): {res_prediction:.2f}g")
+    # Display Cte2 and Cte3 outputs
     st.write(f"📌 **Cte2 (Neutralized Output):** {Cte2:.2f}g")
     st.write(f"📌 **Cte3 (Solid Residue):** {Cte3:.2f}g")
 
