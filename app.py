@@ -52,12 +52,15 @@ input_data = pd.DataFrame([{
     "Concentración de ácido": Acid_Concentration,
     "Volúmen de ácido (L)": Volume_of_Acid,
     "Residuo Seco (%)": RSS_porcentajes,
-    "cte2 (g/L)": cte2_por_MP,
     "Metal_Fe": metal_features[0],
     "Metal_Mg": metal_features[1],
     "Metal_Mn": metal_features[2],
     "Metal_Zn": metal_features[3]
 }])
+
+Cte2 = eff_prediction * MP_gr / 100  # Example formula
+Cte3 = res_prediction  # Residue prediction
+
 
 # Prediction
 if st.button("Predecir"):
@@ -66,6 +69,8 @@ if st.button("Predecir"):
 
     st.write(f"### ✅ Eficiencia Predicha (BS): {eff_prediction:.2f}%")
     st.write(f"### 🏗️ Residuo Predicho (gr): {res_prediction:.2f}g")
+    st.write(f"📌 **Cte2 (Neutralized Output):** {Cte2:.2f}g")
+    st.write(f"📌 **Cte3 (Solid Residue):** {Cte3:.2f}g")
 
 # Feature Importance
 st.markdown("### 🔎 Importancia de las Características")
