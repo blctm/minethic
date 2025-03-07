@@ -72,8 +72,21 @@ st.markdown("### 🔎 Importancia de las Características")
 eff_importances = model_efficiency.feature_importances_
 res_importances = model_residuo.feature_importances_
 
-feature_names = list(input_data.columns)
-eff_importance_df = pd.DataFrame({'Feature': feature_names, 'Importance': eff_importances}).sort_values(by='Importance', ascending=False)
+#feature_names = list(input_data.columns)
+# Ensure only features that were in the model training are used
+expected_features = ["MP(gr)", "Cantidad Total(gr)", "Tiempo", "Temperatura", 
+                     "Disolvente", "LicorLavado", "Concentración de ácido", 
+                     "Volúmen de ácido (L)", "Residuo Seco (%)", "cte2 (g/L)", 
+                     "Metal_Fe", "Metal_Mg", "Metal_Mn", "Metal_Zn"]
+
+# Select only features that exist in the model
+feature_names = expected_features[:len(eff_importances)]
+#eff_importance_df = pd.DataFrame({'Feature': feature_names, 'Importance': eff_importances}).sort_values(by='Importance', ascending=False)
+if len(feature_names) == len(eff_importances):
+    eff_importance_df = pd.DataFrame({'Feature': feature_names, 'Importance': eff_importances}).sort_values(by='Importance', ascending=False)
+else:
+    st.error(f"❌ Mismatch! feature_names: {len(feature_names)}, eff_importances: {len(eff_importances)}")
+    eff_importance_df = pd.DataFrame()  # Avoids crash
 res_importance_df = pd.DataFrame({'Feature': feature_names, 'Importance': res_importances}).sort_values(by='Importance', ascending=False)
 
 fig1, ax1 = plt.subplots(figsize=(10, 6))
