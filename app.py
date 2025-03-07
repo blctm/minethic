@@ -59,7 +59,7 @@ input_data = pd.DataFrame([{
 }])
 
 #Cte2 = eff_prediction * MP_gr / 100  # Example formula
-Cte3 = res_prediction  # Residue prediction
+#Cte3 = res_prediction  # Residue prediction
 
 
 # Prediction
