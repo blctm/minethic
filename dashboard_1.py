@@ -4,10 +4,10 @@ import joblib
 import matplotlib.pyplot as plt
 
 # Cargar modelos y escaladores
-scaler_eff = joblib.load("scaler_efficiency.pkl")
-model_efficiency = joblib.load("model_efficiency.pkl")
-scaler_res = joblib.load("scaler_residuo.pkl")
-model_residuo = joblib.load("model_residuo.pkl")
+scaler_eff = joblib.load("scaler_efficiencyb.pkl")
+model_efficiency = joblib.load("model_efficiencyb.pkl")
+scaler_res = joblib.load("scaler_residuob.pkl")
+model_residuo = joblib.load("model_residuob.pkl")
 
 # Título de la app
 st.title("Predicción de la Eficiencia Sólida")
@@ -19,7 +19,7 @@ El proceso de lixiviación es una técnica utilizada para extraer metales valios
 
 - **Concentración de Ácido**: Se calcula a partir de datos experimentales relacionados con el pH.
 - **Volumen de Ácido (L)**: Corresponde al volumen de solución utilizada durante la reacción química.
-- **Disolvente y Licor de Lavado**: Representan la cantidad de solvente utilizado y el lavado realizado para mejorar la pureza.
+- **Disolvente**: Representan la cantidad de solvente utilizado
 
 ### Proceso Inicial
 Para utilizar este modelo:
@@ -37,10 +37,10 @@ Cantidad_Total = st.sidebar.number_input("Cantidad Total(gr)", value=0)
 Tiempo = st.sidebar.number_input("Tiempo (hours)", value=0)
 Temperatura = st.sidebar.number_input("Temperatura (°C)", value=0)
 Disolvente = st.sidebar.number_input("Disolvente", value=0.0, format="%.2f")
-LicorLavado = st.sidebar.number_input("LicorLavado", value=0.0, format="%.2f")
 Acid_Concentration = st.sidebar.number_input("Concentración de ácido", value=0.0, format="%.2f")
 Volume_of_Acid = st.sidebar.number_input("Volúmen de ácido (L)", value=0.0, format="%.2f")
 
+# LicorLavado = st.sidebar.number_input("LicorLavado", value=0.0, format="%.2f")
 # Dropdown para metales
 metal = st.sidebar.selectbox(
     "Metales",
