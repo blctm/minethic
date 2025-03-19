@@ -64,7 +64,6 @@ input_data = pd.DataFrame([{
     "Tiempo": Tiempo,
     "Temperatura": Temperatura,
     "Disolvente": Disolvente,
-    "LicorLavado": LicorLavado,
     "Concentración de ácido": Acid_Concentration,
     "Volúmen de ácido (L)": Volume_of_Acid,
     "Metal_Fe": metal_features[0],
