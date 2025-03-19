@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 scaler_eff = joblib.load("Bscaler_efficiency.pkl")
 model_efficiency = joblib.load("Bmodel_efficiency.pkl")
 scaler_res = joblib.load("Bscaler_residuo.pkl")
-model_residuo = joblib.load("Bmodel_residuo.pkl")
+model_residuo = joblib.load("Bmodel_residuob.pkl")
 
 # Título de la app
 st.title("Predicción de la Eficiencia Sólida")
